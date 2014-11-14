@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 
 namespace BananaUtils
 {
@@ -14,10 +13,13 @@ namespace BananaUtils
         /// <param name="stream">The <see cref="Stream"/> to read from.</param>
         /// <param name="count">How many bytes have to be read.</param>
         /// <returns>An array containing the given number of bytes.</returns>
-        public static byte[] ReallyRead(this Stream stream, uint count)
+        public static byte[] ReallyRead(this Stream stream, int count)
         {
+            if (count < 0)
+                throw new ArgumentOutOfRangeException("count", "Count can't be less than zero.");
+
             var result = new byte[count];
-            var offset = 0u;
+            var offset = 0;
 
             while (count - offset > 0)
             {
